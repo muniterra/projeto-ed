@@ -19,9 +19,114 @@ long int Tamanho = sizeof(TpJogador);
 
 
 
-long int TArquivo() {}
+long int TArquivo() {
+	
+	fseek(ArqJogadores, 0, 2);
+	long int R = ftell(ArqJogadores)/Tamanho;
+	return R;
 
-void Incluir() {}
+}
+
+
+void Incluir() {
+
+	char R;
+	char NomeJogador[20], PosicaoJogador[20];
+	int IdadeJogador;
+	float AlturaJogador, PesoJogador, VelocidadeMax;
+	
+	do {
+		
+	    system("cls");
+	    printf("*** INCLUSAO DE JOGADOR ***\n\n");
+	    
+	    printf("Nome do jogador: ");
+	    scanf("%s", &NomeJogador);
+	    
+	    printf("Posicao do jogador: ");
+	    scanf("%s", &PosicaoJogador);
+	    
+	    printf("Idade do jogador: ");
+	    scanf("%d", &IdadeJogador);
+	    
+	    printf("Altura do jogador: ");
+	    scanf("%f", &AlturaJogador);
+	    
+	    printf("Peso do jogador: ");
+	    scanf("%f", &PesoJogador);
+	    
+	    printf("Velocidade maxima do jogador: ");
+	    scanf("%f", &VelocidadeMax);
+	    
+	    if(TArquivo()!=0){
+	    	
+			fclose(ArqJogadores);
+			ArqJogadores = fopen("Jogadores.dat", "r+b");
+			fseek(ArqJogadores, 0, 0);
+			int Achou = 0;
+			
+			do {
+				
+				fread(&RgJogador, Tamanho, 1, ArqJogadores);
+				
+				if (strcmp(RgJogador.Nome, NomeJogador) == 0) {
+					
+					Achou = 1;
+					
+					sprintf(RgJogador.Posicao, "%s", PosicaoJogador);
+					RgJogador.idade = IdadeJogador;
+					RgJogador.Altura = AlturaJogador;
+					RgJogador.Peso = PesoJogador;
+					RgJogador.VelocidadeMax = VelocidadeMax;
+					
+					fseek(ArqJogadores, -Tamanho, 1);
+			    	fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
+			    	
+				}
+				
+				if (feof(ArqJogadores)) {
+				
+					fseek(ArqJogadores, 0, 2);
+					
+					sprintf(RgJogador.Nome, "%s", NomeJogador);
+					sprintf(RgJogador.Posicao, "%s", PosicaoJogador);
+					RgJogador.idade = IdadeJogador;
+					RgJogador.Altura = AlturaJogador;
+					RgJogador.Peso = PesoJogador;
+					RgJogador.VelocidadeMax = VelocidadeMax;
+					
+				    fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
+				    
+				    break;
+				    
+				}
+			} while (Achou == 0);
+		}
+		
+		else {
+			
+			fseek(ArqJogadores,0,2);
+			
+			sprintf(RgJogador.Nome, "%s", NomeJogador);
+			sprintf(RgJogador.Posicao, "%s", PosicaoJogador);
+			RgJogador.idade = IdadeJogador;
+			RgJogador.Altura = AlturaJogador;
+			RgJogador.Peso = PesoJogador;
+			RgJogador.VelocidadeMax = VelocidadeMax;
+			
+		    fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
+	    
+		}
+		
+		printf("\nNova inclusao? S/N ");
+	    scanf(" %c", &R);
+	    R = toupper(R);
+	    
+	} while (R != 'N');
+  
+  return;
+  
+}
 
 void Excluir(){}
 
