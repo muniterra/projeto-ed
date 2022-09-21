@@ -6,7 +6,7 @@
 struct Jogador{
 	char Nome[20], Posicao[20];
     int idade;
-    float Altura, Peso, VelocidadeMax;
+    float Altura, Peso, VelocidadeMax; //se velocidadeMax == 0 o jogador eh considerado excluido
 };
   
 typedef struct Jogador TpJogador;
@@ -27,6 +27,17 @@ long int TArquivo() {
 
 }
 
+int ehRepetido(char nome[20]){
+	fseek(ArqJogadores, 0, 0);
+
+	do{
+		fread(&RgJogador,Tamanho,1,ArqJogadores);
+        if ( (strcmp(RgJogador.Nome, nome) == 0) && (RgJogador.VelocidadeMax != 0) )
+            return 1;
+	}
+	while(!feof(ArqJogadores));
+	return 0;
+}
 
 void Incluir() {
 
@@ -42,81 +53,30 @@ void Incluir() {
 	    
 	    printf("Nome do jogador: ");
 	    scanf("%s", &NomeJogador);
+
+		if (ehRepetido(NomeJogador)){
+			printf("Jogador repetido\n\n");
+			printf("Deseja fazer uma nova inclusao? S/N\n");
+			scanf(" %c", &R);
+			continue;
+		}
+
+		strcpy(RgJogador.Nome, NomeJogador);
 	    
 	    printf("Posicao do jogador: ");
-	    scanf("%s", &PosicaoJogador);
+	    scanf("%s", &RgJogador.Posicao);
 	    
 	    printf("Idade do jogador: ");
-	    scanf("%d", &IdadeJogador);
+	    scanf("%d", &RgJogador.idade);
 	    
 	    printf("Altura do jogador: ");
-	    scanf("%f", &AlturaJogador);
+	    scanf("%f", &RgJogador.Altura);
 	    
 	    printf("Peso do jogador: ");
-	    scanf("%f", &PesoJogador);
+	    scanf("%f", &RgJogador.Peso);
 	    
 	    printf("Velocidade maxima do jogador: ");
-	    scanf("%f", &VelocidadeMax);
-	    
-	    if(TArquivo()!=0){
-	    	
-			fclose(ArqJogadores);
-			ArqJogadores = fopen("Jogadores.dat", "r+b");
-			fseek(ArqJogadores, 0, 0);
-			int Achou = 0;
-			
-			do {
-				
-				fread(&RgJogador, Tamanho, 1, ArqJogadores);
-				
-				if (strcmp(RgJogador.Nome, NomeJogador) == 0) {
-					
-					Achou = 1;
-					
-					sprintf(RgJogador.Posicao, "%s", PosicaoJogador);
-					RgJogador.idade = IdadeJogador;
-					RgJogador.Altura = AlturaJogador;
-					RgJogador.Peso = PesoJogador;
-					RgJogador.VelocidadeMax = VelocidadeMax;
-					
-					fseek(ArqJogadores, -Tamanho, 1);
-			    	fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
-			    	
-				}
-				
-				if (feof(ArqJogadores)) {
-				
-					fseek(ArqJogadores, 0, 2);
-					
-					sprintf(RgJogador.Nome, "%s", NomeJogador);
-					sprintf(RgJogador.Posicao, "%s", PosicaoJogador);
-					RgJogador.idade = IdadeJogador;
-					RgJogador.Altura = AlturaJogador;
-					RgJogador.Peso = PesoJogador;
-					RgJogador.VelocidadeMax = VelocidadeMax;
-					
-				    fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
-				    
-				    break;
-				    
-				}
-			} while (Achou == 0);
-		}
-		
-		else {
-			
-			fseek(ArqJogadores,0,2);
-			
-			sprintf(RgJogador.Nome, "%s", NomeJogador);
-			sprintf(RgJogador.Posicao, "%s", PosicaoJogador);
-			RgJogador.idade = IdadeJogador;
-			RgJogador.Altura = AlturaJogador;
-			RgJogador.Peso = PesoJogador;
-			RgJogador.VelocidadeMax = VelocidadeMax;
-			
-		    fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
-	    
-		}
+	    scanf("%f", &RgJogador.VelocidadeMax);
 		
 		printf("\nNova inclusao? S/N ");
 	    scanf(" %c", &R);
@@ -151,7 +111,7 @@ int main(){
 		printf("I - Incluir novo jogador\n");
 		printf("A - Alterar dados de jogador\n");  
 		printf("E - Remover jogador c\n");
-		printf("C - Consultar jogador\n"); //Usuário será levado a outro menu perguntando se a consulta será por nome ou por posição
+		printf("C - Consultar jogador\n"); //Usuario sera levado a outro menu perguntando se a consulta sera por nome ou por posicao
 		printf("T - Listar todos os jogadores\n");
 		printf("S - Sair do programa\n\n");
 		
