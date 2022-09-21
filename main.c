@@ -43,6 +43,7 @@ void Incluir() {
 
 	char R;
 	char NomeJogador[20];
+	float VelocidadeMax;
 	
 	do {
 		
@@ -75,12 +76,22 @@ void Incluir() {
 	    scanf("%f", &RgJogador.Peso);
 	    
 	    printf("Velocidade maxima do jogador: ");
-	    scanf("%f", &RgJogador.VelocidadeMax);
+	    scanf("%f", &VelocidadeMax);
+		
+		while(VelocidadeMax <= 0){
+			system("cls");
+			printf("Velocidade maxima invalida\n");
+			printf("Digite um valor positivo maior que 0\n");
+			printf("Velocidade maxima do jogador: ");
+			scanf("%f", &VelocidadeMax);
+		}
+
+		RgJogador.VelocidadeMax = VelocidadeMax;
 
 		fseek(ArqJogadores, 0, 2);
 		fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
 		
-		printf("\nNova inclusao? S/N ");
+		printf("\n\nNova inclusao? S/N ");
 		scanf(" %c", &R);
 		R = toupper(R);
 	    
