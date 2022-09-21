@@ -31,7 +31,7 @@ int ehRepetido(char nome[20]){
 	fseek(ArqJogadores, 0, 0);
 
 	do{
-		fread(&RgJogador,Tamanho,1,ArqJogadores);
+		fread(&RgJogador, Tamanho, 1, ArqJogadores);
         if ( (strcmp(RgJogador.Nome, nome) == 0) && (RgJogador.VelocidadeMax != 0) )
             return 1;
 	}
@@ -42,9 +42,7 @@ int ehRepetido(char nome[20]){
 void Incluir() {
 
 	char R;
-	char NomeJogador[20], PosicaoJogador[20];
-	int IdadeJogador;
-	float AlturaJogador, PesoJogador, VelocidadeMax;
+	char NomeJogador[20];
 	
 	do {
 		
@@ -58,6 +56,7 @@ void Incluir() {
 			printf("Jogador repetido\n\n");
 			printf("Deseja fazer uma nova inclusao? S/N\n");
 			scanf(" %c", &R);
+			R = toupper(R);
 			continue;
 		}
 
@@ -77,6 +76,9 @@ void Incluir() {
 	    
 	    printf("Velocidade maxima do jogador: ");
 	    scanf("%f", &RgJogador.VelocidadeMax);
+
+		fseek(ArqJogadores, 0, 2);
+		fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
 		
 		printf("\nNova inclusao? S/N ");
 	    scanf(" %c", &R);
@@ -94,7 +96,28 @@ void Alterar(){}
 
 void Consultar() {}
 
-void LTodos() {}
+void LTodos() {
+	system("cls");
+	printf("**** Consula Total ****\n\n");
+	fseek(ArqJogadores, 0, 0);
+
+	do{
+		fread(&RgJogador, Tamanho, 1, ArqJogadores);
+
+		if ( !feof(ArqJogadores) && (RgJogador.VelocidadeMax != 0) ){
+			printf("Nome: %s\n", RgJogador.Nome);
+			printf("Idade: %i\n", RgJogador.idade);
+			printf("Altura: %f\n", RgJogador.Altura);
+			printf("Peso: %f\n", RgJogador.Peso);
+			printf("Posicao: %s\n", RgJogador.Posicao);
+			printf("Velocidade Maxima: %f\n\n\n", RgJogador.VelocidadeMax);
+		}
+	}
+	while (!feof(ArqJogadores));
+
+	system("pause");
+	return;
+}
 
 int main(){
 	
