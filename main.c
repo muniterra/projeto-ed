@@ -69,13 +69,13 @@ void Incluir() {
 	    printf("Idade do jogador: ");
 	    scanf("%d", &RgJogador.idade);
 	    
-	    printf("Altura do jogador: ");
+	    printf("Altura do jogador (em metros): ");
 	    scanf("%f", &RgJogador.Altura);
 	    
-	    printf("Peso do jogador: ");
+	    printf("Peso do jogador (em kg): ");
 	    scanf("%f", &RgJogador.Peso);
 	    
-	    printf("Velocidade maxima do jogador: ");
+	    printf("Velocidade maxima do jogador (km/h): ");
 	    scanf("%f", &VelocidadeMax);
 		
 		while(VelocidadeMax <= 0){
@@ -118,10 +118,10 @@ void LTodos() {
 		if ( !feof(ArqJogadores) && (RgJogador.VelocidadeMax != 0) ){
 			printf("Nome: %s\n", RgJogador.Nome);
 			printf("Idade: %i\n", RgJogador.idade);
-			printf("Altura: %f\n", RgJogador.Altura);
-			printf("Peso: %f\n", RgJogador.Peso);
+			printf("Altura: %.2f m\n", RgJogador.Altura);
+			printf("Peso: %.2f kg\n", RgJogador.Peso);
 			printf("Posicao: %s\n", RgJogador.Posicao);
-			printf("Velocidade Maxima: %f\n\n\n", RgJogador.VelocidadeMax);
+			printf("Velocidade Maxima: %.2f km/h\n\n\n", RgJogador.VelocidadeMax);
 		}
 	}
 	while (!feof(ArqJogadores));
