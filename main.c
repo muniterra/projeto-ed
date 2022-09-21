@@ -81,8 +81,8 @@ void Incluir() {
 		fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
 		
 		printf("\nNova inclusao? S/N ");
-	    scanf(" %c", &R);
-	    R = toupper(R);
+		scanf(" %c", &R);
+		R = toupper(R);
 	    
 	} while (R != 'N');
   
