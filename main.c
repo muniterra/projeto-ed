@@ -103,7 +103,67 @@ void Incluir() {
 
 void Excluir(){}
 
-void Alterar(){}
+void Alterar(){
+	char nome[20];
+	int achou = 0;
+
+	if (TArquivo()!=0){
+		fclose(ArqJogadores);
+		ArqJogadores = fopen("Jogadores.dat","r+b");
+		fseek(ArqJogadores, 0, 0);
+
+		system("cls");
+		printf("**** Alteracao de dados ****\n\n");
+		printf("Digite o nome do jogador a ser alterado: ");
+		scanf("%s", nome);
+
+		do{
+			fread(&RgJogador, Tamanho, 1, ArqJogadores);
+
+			if ( (strcmp(nome, RgJogador.Nome) == 0) && (RgJogador.VelocidadeMax != 0) ){
+				achou = 1;
+				printf("\n\n\nNome: %s\n", RgJogador.Nome);
+				printf("Idade: %i anos\n", RgJogador.idade);
+				printf("Altura: %.2f m\n", RgJogador.Altura);
+				printf("Peso: %.2f kg\n", RgJogador.Peso);
+				printf("Posicao: %s\n", RgJogador.Posicao);
+				printf("Velocidade Maxima: %.2f m/s\n\n\n", RgJogador.VelocidadeMax);
+				system("pause");
+			}
+		}
+		while( !feof(ArqJogadores) && (achou==0) );
+
+		if(achou==0){
+			printf("Registro inexistente!");
+			system("pause");
+		}
+		else{
+			printf("\nQual a nova idade? ");
+			scanf("%i", &RgJogador.idade);
+
+			printf("\nQual o novo peso? ");
+			scanf("%f", &RgJogador.Peso);
+
+			printf("\nQual a nova posicao? ");
+			scanf("%s", &RgJogador.Posicao);
+
+			printf("\nQual a nova velocidade maxima? ");
+			scanf("%f", &RgJogador.VelocidadeMax);
+
+			fseek(ArqJogadores, -Tamanho, 1);
+			fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
+			printf("\n\n**** Registro alterado com sucesso! ****\n\n");
+			system("pause");
+
+			fclose(ArqJogadores);
+			ArqJogadores = fopen("Jogadores.dat", "a+b");
+		}
+	}else{
+		printf("Arquivo vazio, nao ha dados para alterar");
+		system("pause");
+	}
+	return;
+}
 
 void Consultar() {
 	char nome[20];
