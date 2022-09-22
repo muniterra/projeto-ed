@@ -105,7 +105,36 @@ void Excluir(){}
 
 void Alterar(){}
 
-void Consultar() {}
+void Consultar() {
+	char nome[20];
+
+	system("cls");
+	printf("**** Consultar jogador ****\n\n");
+	printf("Insira o nome do jogador que deseja consultar: ");
+	scanf("%s", nome);
+
+	fseek(ArqJogadores, 0, 0);
+	do{
+		fread(&RgJogador, Tamanho, 1, ArqJogadores);
+
+		if ( !feof(ArqJogadores) && (RgJogador.VelocidadeMax != 0) && (strcmp(nome, RgJogador.Nome)==0) ){
+			printf("Nome: %s\n", RgJogador.Nome);
+			printf("Idade: %i anos\n", RgJogador.idade);
+			printf("Altura: %.2f m\n", RgJogador.Altura);
+			printf("Peso: %.2f kg\n", RgJogador.Peso);
+			printf("Posicao: %s\n", RgJogador.Posicao);
+			printf("Velocidade Maxima: %.2f m/s\n\n\n", RgJogador.VelocidadeMax);
+
+			system("pause");
+			return;
+		}
+	}
+	while (!feof(ArqJogadores));
+
+	printf("Registro inexistente\n\n");
+	system("pause");
+	return;
+}
 
 void LTodos() {
 	system("cls");
