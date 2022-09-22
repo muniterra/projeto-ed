@@ -266,6 +266,8 @@ void LTodos() {
 	return;
 }
 
+void CPosicao(){}
+
 int main(){
 	
 	ArqJogadores = fopen("Jogadores.dat", "a+b");
@@ -293,8 +295,10 @@ int main(){
 			case 'E': Excluir(); break;
 			case 'A': Alterar(); break;
 			case 'C': Consultar(); break;
-			case 'T': LTodos(); break;}	
-			}
+			case 'T': LTodos(); break;
+			case 'P': CPosicao(); break;
+			}	
+	}
 
 	while (Opcao != 'S');
 	fclose(ArqJogadores);
