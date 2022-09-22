@@ -101,7 +101,53 @@ void Incluir() {
   
 }
 
-void Excluir(){}
+void Excluir(){
+	char nome[20];
+	int achou = 0;
+
+	if (TArquivo()!=0){
+		fclose(ArqJogadores);
+		ArqJogadores = fopen("Jogadores.dat","r+b");
+		fseek(ArqJogadores, 0, 0);
+
+		system("cls");
+		printf("**** Excluir jogador ****\n\n");
+		printf("Digite o nome do jogador a ser excluido: ");
+		scanf("%s", nome);
+
+		do{
+			fread(&RgJogador, Tamanho, 1, ArqJogadores);
+
+			if ( (strcmp(nome, RgJogador.Nome) == 0) && (RgJogador.VelocidadeMax != 0) ){
+				achou = 1;
+			}
+		}
+		while( !feof(ArqJogadores) && (achou==0) );
+
+		if(achou==0){
+			printf("\nRegistro inexistente!\n");
+			system("pause");
+		}
+		else{
+			RgJogador.VelocidadeMax = 0;
+
+			fseek(ArqJogadores, -Tamanho, 1);
+			fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
+			printf("\n\n**** Registro excluido com sucesso! ****\n\n");
+			system("pause");
+
+			fclose(ArqJogadores);
+			ArqJogadores = fopen("Jogadores.dat", "a+b");
+		}
+	}
+	else{
+		printf("Arquivo vazio, nao ha jogadores para excluir\n\n");
+		system("pause");
+	}
+	return;
+
+
+}
 
 void Alterar(){
 	char nome[20];
@@ -134,7 +180,7 @@ void Alterar(){
 		while( !feof(ArqJogadores) && (achou==0) );
 
 		if(achou==0){
-			printf("Registro inexistente!");
+			printf("\nRegistro inexistente!\n");
 			system("pause");
 		}
 		else{
@@ -158,7 +204,8 @@ void Alterar(){
 			fclose(ArqJogadores);
 			ArqJogadores = fopen("Jogadores.dat", "a+b");
 		}
-	}else{
+	}
+	else{
 		printf("Arquivo vazio, nao ha dados para alterar\n\n");
 		system("pause");
 	}
@@ -191,7 +238,7 @@ void Consultar() {
 	}
 	while (!feof(ArqJogadores));
 
-	printf("Registro inexistente\n\n");
+	printf("\nRegistro inexistente\n");
 	system("pause");
 	return;
 }
