@@ -117,7 +117,7 @@ void LTodos() {
 
 		if ( !feof(ArqJogadores) && (RgJogador.VelocidadeMax != 0) ){
 			printf("Nome: %s\n", RgJogador.Nome);
-			printf("Idade: %i\n", RgJogador.idade);
+			printf("Idade: %i anos\n", RgJogador.idade);
 			printf("Altura: %.2f m\n", RgJogador.Altura);
 			printf("Peso: %.2f kg\n", RgJogador.Peso);
 			printf("Posicao: %s\n", RgJogador.Posicao);
