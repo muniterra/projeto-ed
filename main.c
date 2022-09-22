@@ -159,7 +159,7 @@ void Alterar(){
 			ArqJogadores = fopen("Jogadores.dat", "a+b");
 		}
 	}else{
-		printf("Arquivo vazio, nao ha dados para alterar");
+		printf("Arquivo vazio, nao ha dados para alterar\n\n");
 		system("pause");
 	}
 	return;
@@ -233,7 +233,7 @@ int main(){
 		printf("O QUE DESEJA FAZER AGORA? \n\n");
 		printf("I - Incluir novo jogador\n");
 		printf("A - Alterar dados de jogador\n");  
-		printf("E - Remover jogador c\n");
+		printf("E - Remover jogador\n");
 		printf("C - Consultar jogador\n"); //Usuario sera levado a outro menu perguntando se a consulta sera por nome ou por posicao
 		printf("T - Listar todos os jogadores\n");
 		printf("S - Sair do programa\n\n");
