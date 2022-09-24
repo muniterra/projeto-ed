@@ -216,7 +216,7 @@ void Consultar() {
 	char nome[20];
 
 	system("cls");
-	printf("**** Consultar jogador ****\n\n");
+	printf("**** Consultar jogador por nome****\n\n");
 	printf("Insira o nome do jogador que deseja consultar: ");
 	scanf("%s", nome);
 
@@ -266,7 +266,32 @@ void LTodos() {
 	return;
 }
 
-void CPosicao(){}
+void CPosicao(){
+	char posicao[20];
+	
+		system("cls");
+		printf("**** Listar jogadores por posicao ****\n\n");
+		printf("Insira a posicao que deseja consultar: ");
+		scanf("%s", posicao);
+	
+		fseek(ArqJogadores, 0, 0);
+		do{
+			fread(&RgJogador, Tamanho, 1, ArqJogadores);
+	
+			if ( !feof(ArqJogadores) && (RgJogador.VelocidadeMax != 0) && (strcmp(posicao, RgJogador.Posicao)==0) ){
+				printf("-------------------------------------\n");
+				printf("Nome: %s\n", RgJogador.Nome);
+				printf("Idade: %i anos\n", RgJogador.idade);
+				printf("Altura: %.2f m\n", RgJogador.Altura);
+				printf("Peso: %.2f kg\n", RgJogador.Peso);
+				printf("Posicao: %s\n", RgJogador.Posicao);
+				printf("Velocidade Maxima: %.2f m/s\n", RgJogador.VelocidadeMax);
+				printf("-------------------------------------\n");
+			}
+		}
+		while (!feof(ArqJogadores));
+		system("pause");
+		return;}
 
 int main(){
 	
@@ -283,7 +308,8 @@ int main(){
 		printf("I - Incluir novo jogador\n");
 		printf("A - Alterar dados de jogador\n");  
 		printf("E - Remover jogador\n");
-		printf("C - Consultar jogador\n"); //Usuario sera levado a outro menu perguntando se a consulta sera por nome ou por posicao
+		printf("C - Consultar jogador por nome\n");
+		printf("P - Listar jogadores por posicao\n");	
 		printf("T - Listar todos os jogadores\n");
 		printf("S - Sair do programa\n\n");
 		
