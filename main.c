@@ -16,7 +16,7 @@ TpJogador RgJogador;
 FILE *ArqJogadores;
 
 long int Tamanho = sizeof(TpJogador);
-
+//AAAAAAAAAAAAAA
 
 
 long int TArquivo() {
