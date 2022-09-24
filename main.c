@@ -149,9 +149,12 @@ void Excluir(){
 
 }
 
+
+
 void Alterar(){
 	char nome[20];
 	int achou = 0;
+  float VelocidadeMax;
 
 	if (TArquivo()!=0){
 		fclose(ArqJogadores);
@@ -194,8 +197,18 @@ void Alterar(){
 			scanf("%s", &RgJogador.Posicao);
 
 			printf("\nQual a nova velocidade maxima? ");
-			scanf("%f", &RgJogador.VelocidadeMax);
+			scanf("%f", &VelocidadeMax);
 
+      while(VelocidadeMax <= 0){
+			 system("cls");
+			 printf("Velocidade maxima invalida\n");
+			 printf("Digite um valor positivo maior que 0\n");
+			 printf("Velocidade maxima do jogador: ");
+			 scanf("%f", &VelocidadeMax);
+		}
+
+      RgJogador.VelocidadeMax = VelocidadeMax;
+      
 			fseek(ArqJogadores, -Tamanho, 1);
 			fwrite(&RgJogador, Tamanho, 1, ArqJogadores);
 			printf("\n\n**** Registro alterado com sucesso! ****\n\n");
